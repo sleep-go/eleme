@@ -19,7 +19,7 @@
 
 <script type="text/ecmascript-6">
   import header from './components/header/header';
-  const CODE_OK = 0;
+  const CODE_OK = 1;
   export default {
     data() {
       return {
@@ -30,8 +30,8 @@
       this.$http.get('/api/seller').then((res) => {
         res = res.body;
         if (res.code === CODE_OK) {
-            this.seller = res.data;
-            console.log(this.seller);
+          this.seller = res.data;
+          console.log(this.seller);
         }
       });
     },

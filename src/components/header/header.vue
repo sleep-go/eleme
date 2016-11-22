@@ -30,21 +30,46 @@
     <div class="background">
       <img :src="seller.avatar" width="100%">
     </div>
-    <div class="detail" v-show="detailShow">
-      <div class="detail-wrapper clearfix">
-        <div class="detail-main">
-          <h1 class="name">{{ seller.name }}</h1>
+    <transition name="fade">
+      <div class="detail" v-show="detailShow">
+        <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+            <h1 class="name">{{ seller.name }}</h1>
+            <div class="star-wrapper">
+              <star :size="48" :score="seller.score"></star>
+            </div>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">优惠信息</div>
+              <div class="line"></div>
+            </div>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="item in seller.supports">
+                <span class="icon" :class="classMap[item.type]"></span>
+                <span class="text">{{ item.description }}</span>
+              </li>
+            </ul>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">商家公告</div>
+              <div class="line"></div>
+            </div>
+            <div class="bulletin">
+              <p class="content">{{ seller.bulletin }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="detail-close" @click="showDetail">
+          <i class="sell-icon icon-cuowu"></i>
         </div>
       </div>
-      <div class="detail-close" @click="showDetail">
-        <i class="sell-icon icon-cuowu"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import '../../common/style/icon.scss';
+  import star from 'components/star/star';
+
   export default{
     props: {
       seller: {
@@ -53,6 +78,9 @@
     },
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+    },
+    components: {
+      star
     },
     data() {
       return {
@@ -212,7 +240,17 @@
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgba(7, 17, 27, 0.8);
+      background: rgba(7, 17, 27, 0.8);
+      backdrop-filter: blur(10px);
+      &.fade-enter-active {
+        transition: all .3s;
+      }
+      &.fade-enter, &.fade-leave-active {
+        transition: all .3s;
+        padding-top: 100px;
+        opacity: 0;
+        background: rgba(7, 17, 27, 0);
+      }
       .detail-wrapper {
         min-height: 100%;
         width: 100%;
@@ -223,6 +261,77 @@
             text-align: center;
             font-size: 16px;
             font-weight: 700;
+          }
+          .star-wrapper {
+            margin-top: 18px;
+            padding: 2px 0;
+            text-align: center;
+          }
+          .title {
+            display: flex;
+            width: 80%;
+            margin: 28px auto 24px auto;
+            .line {
+              flex: 1;
+              position: relative;
+              top: -6px;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .text {
+              padding: 0 12px;
+              font-weight: 700;
+              font-size: 14px;
+            }
+          }
+          .supports {
+            width: 80%;
+            margin: 0 auto;
+            .support-item {
+              padding: 0 12px;
+              margin-bottom: 12px;
+              font-size: 0;
+              &:last-child {
+                margin-bottom: 0;
+              }
+              .icon {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                vertical-align: top;
+                margin-right: 6px;
+                background-size: 16px 16px;
+                background-repeat: no-repeat;
+                &.decrease {
+                  @include bg-img('decrease_2');
+                }
+                &.discount {
+                  @include bg-img('discount_2');
+                }
+                &.guarantee {
+                  @include bg-img('guarantee_2');
+                }
+                &.invoice {
+                  @include bg-img('invoice_2');
+                }
+                &.special {
+                  @include bg-img('special_2');
+                }
+              }
+              .text {
+                line-height: 16px;
+                font-size: 12px;
+              }
+
+            }
+          }
+          .bulletin {
+            width: 80%;
+            margin: 0 auto;
+            .content {
+              padding: 0 12px;
+              line-height: 24px;
+              font-size: 12px;
+            }
           }
         }
       }
