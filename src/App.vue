@@ -12,7 +12,7 @@
         <router-link to="/seller">商家</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view :seller="seller"></router-view>
     <div class="footer">footer</div>
   </div>
 </template>
@@ -31,7 +31,6 @@
         res = res.body;
         if (res.code === CODE_OK) {
           this.seller = res.data;
-          console.log(this.seller);
         }
       });
     },

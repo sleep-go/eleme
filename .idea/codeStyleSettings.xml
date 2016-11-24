@@ -14,6 +14,7 @@
           <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
           <option name="SPACES_WITHIN_IMPORTS" value="true" />
           <option name="INDENT_CHAINED_CALLS" value="false" />
+          <option name="CHAINED_CALL_DOT_ON_NEW_LINE" value="false" />
         </JSCodeStyleSettings>
         <TypeScriptCodeStyleSettings>
           <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
@@ -27,6 +28,8 @@
           </indentOptions>
         </codeStyleSettings>
         <codeStyleSettings language="TypeScript">
+          <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
+          <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
           <indentOptions>
             <option name="SMART_TABS" value="true" />
           </indentOptions>
