@@ -21,6 +21,15 @@
         </div>
       </div>
     </div>
+    <div class="ball-container">
+      <transition-group name="drop">
+        <div v-for="(ball,index) in balls" key="index" v-show="ball.show">
+          <div class="inner">
+
+          </div>
+        </div>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -46,6 +55,18 @@
         type: Number,
         default: 0
       }
+    },
+    data() {
+      return {
+        balls: [
+          { show: false },
+          { show: false },
+          { show: false },
+          { show: false },
+          { show: false },
+          { show: false }
+        ]
+      };
     },
     computed: {
       totalPrice() {
@@ -79,7 +100,8 @@
           return 'enough';
         }
       }
-    }
+    },
+    methods: {}
   };
 </script>
 
@@ -183,6 +205,24 @@
           &.enough {
             background: #00b43c;
             color: #fff;
+          }
+        }
+      }
+    }
+    .ball-container {
+      .ball {
+        position: fixed;
+        left: 32px;
+        bottom: 22px;
+        z-index: 200;
+        &.drop-enter-active {
+          transition: all 0.4s;
+          .inner {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgb(0, 160, 220);
+            transition: all 0.4s;
           }
         }
       }
