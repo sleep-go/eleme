@@ -1,6 +1,7 @@
 # ele
 
 > A Vue.js project
+>仿饿了么
 
 ## Build Setup
 
