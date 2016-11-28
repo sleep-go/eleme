@@ -6,9 +6,7 @@
       </div>
     </transition>
     <div class="cart-count" v-show="food.count>0">{{ food.count }}</div>
-    <div class="cart-add" @click="addCart($event)">
-      <i class="sell-icon icon-jia"></i>
-    </div>
+    <div class="cart-add sell-icon icon-jia" @click="addCart($event)"></div>
   </div>
 </template>
 
@@ -21,8 +19,8 @@
       }
     },
     methods: {
-      addCart(e) {
-        if (!e._constructed) {
+      addCart(event) {
+        if (!event._constructed) {
           return;
         }
         if (!this.food.count) {
@@ -30,10 +28,10 @@
         } else {
           this.food.count++;
         }
-        this.$emit('shopcart', e.target);
+        this.$emit('addCart', event.target);
       },
-      decreaseCart(e) {
-        if (!e._constructed) {
+      decreaseCart(event) {
+        if (!event._constructed) {
           return;
         }
         if (this.food.count) {
@@ -47,19 +45,17 @@
 <style lang="scss" rel="stylesheet/scss">
   .cartcontrol {
     font-size: 0;
-    i {
-      color: rgb(0, 160, 220);
-    }
+    color: rgb(0, 160, 220);
     .cart-decrease {
       transition: all 0.4s linear;
       &.move-enter-active {
         opacity: 1;
-        transform: translate3D(0, 0, 0) rotate(0deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
         display: inline-block;
       }
       &.move-enter, &.move-leave-active {
         opacity: 0;
-        transform: translate3D(24px, 0, 0) rotate(180deg);
+        transform: translate3d(24px, 0, 0) rotate(180deg);
       }
     }
     .cart-decrease, .cart-add {
@@ -80,6 +76,7 @@
       color: rgb(147, 153, 159);
     }
     .cart-add {
+      font-size: 16px;
       margin-right: 20px;
       vertical-align: super;
     }
