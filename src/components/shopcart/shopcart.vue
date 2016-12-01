@@ -23,17 +23,17 @@
         </div>
       </div>
       <div class="ball-container">
-        <transition-group
-          tag="div"
+        <transition
           name="drop"
           v-on:before-enter="beforeEnter"
           v-on:enter="enter"
           v-on:after-enter="afterEnter"
+          v-for="(ball,index) in balls"
         >
-          <div v-for="(ball,index) in balls" v-show="ball.show" v-bind:key="index" class="ball">
+          <div v-show="ball.show" class="ball">
             <div class="inner inner-hook"></div>
           </div>
-        </transition-group>
+        </transition>
       </div>
       <transition name="fold">
         <div class="shopcart-list" v-show="listShow">
@@ -47,7 +47,11 @@
                 <span class="name">{{ food.name }}</span>
                 <div class="price">￥{{ food.price*food.count }}</div>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol
+                    :food="food"
+                    @addCart="drop($event)"
+                  >
+                  </cartcontrol>
                 </div>
               </li>
             </ul>
@@ -184,6 +188,7 @@
         }
       },
       beforeEnter(el) {
+        console.log(el);
         let count = this.balls.length;
         while (count--) {
           let ball = this.balls[count];
@@ -200,15 +205,16 @@
           }
         }
       },
-      enter(el) {
+      enter(el, done) {
         /* eslint-disable no-unused-vars */
-        //        let rf = el.offsetHeight;
         this.$nextTick(() => {
+          let rf = el.offsetHeight;
           el.style.webkitTransform = 'translate3d(0, 0, 0)';
           el.style.transform = 'translate3d(0,0,0)';
           let inner = el.getElementsByClassName('inner-hook')[0];
           inner.style.webkitTransform = 'translate3d(0, 0, 0)';
           inner.style.transform = 'translate3d(0, 0, 0)';
+          done();
         });
       },
       afterEnter(el) {
