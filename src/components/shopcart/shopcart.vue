@@ -23,14 +23,27 @@
         </div>
       </div>
       <div class="ball-container">
+        <!--<transition-group-->
+          <!--tag="div"-->
+          <!--name="drop"-->
+          <!--v-on:before-enter="beforeEnter"-->
+          <!--v-on:enter="enter"-->
+          <!--v-on:after-enter="afterEnter"-->
+        <!--&gt;-->
+          <!--<div v-for="(ball,index) in balls" v-show="ball.show" v-bind:key="index" class="ball">-->
+            <!--<div class="inner inner-hook"></div>-->
+          <!--</div>-->
+        <!--</transition-group>-->
+
         <transition-group
-          tag="div"
+                          tag="div"
           name="drop"
           v-on:before-enter="beforeEnter"
           v-on:enter="enter"
           v-on:after-enter="afterEnter"
+          v-for="(ball,index) in balls"
         >
-          <div v-for="(ball,index) in balls" v-show="ball.show" v-bind:key="index" class="ball">
+          <div v-show="ball.show" class="ball" key="index">
             <div class="inner inner-hook"></div>
           </div>
         </transition-group>
@@ -200,16 +213,18 @@
           }
         }
       },
-      enter(el) {
+      enter(el, done) {
         /* eslint-disable no-unused-vars */
-        //        let rf = el.offsetHeight;
+                let rf = el.offsetHeight;
         this.$nextTick(() => {
           el.style.webkitTransform = 'translate3d(0, 0, 0)';
           el.style.transform = 'translate3d(0,0,0)';
           let inner = el.getElementsByClassName('inner-hook')[0];
           inner.style.webkitTransform = 'translate3d(0, 0, 0)';
           inner.style.transform = 'translate3d(0, 0, 0)';
+          done();
         });
+        window.console.log('bbb');
       },
       afterEnter(el) {
         let ball = this.dropBalls.shift();
@@ -337,6 +352,7 @@
         left: 32px;
         bottom: 22px;
         z-index: 200;
+        display: block;
         &.drop-enter-active {
           transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41);
           .inner {
@@ -346,6 +362,10 @@
             background: rgb(0, 160, 220);
             transition: all 0.4s linear;
           }
+        }
+        &.drop-enter {
+          width: 16px;
+          height: 16px;
         }
       }
     }
