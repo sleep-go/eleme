@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="shopcart-wrapper">
     <div class="shopcart">
       <div class="content" @click="totalList">
         <div class="content-left">
@@ -23,30 +23,17 @@
         </div>
       </div>
       <div class="ball-container">
-        <!--<transition-group-->
-          <!--tag="div"-->
-          <!--name="drop"-->
-          <!--v-on:before-enter="beforeEnter"-->
-          <!--v-on:enter="enter"-->
-          <!--v-on:after-enter="afterEnter"-->
-        <!--&gt;-->
-          <!--<div v-for="(ball,index) in balls" v-show="ball.show" v-bind:key="index" class="ball">-->
-            <!--<div class="inner inner-hook"></div>-->
-          <!--</div>-->
-        <!--</transition-group>-->
-
-        <transition-group
-                          tag="div"
+        <transition
           name="drop"
           v-on:before-enter="beforeEnter"
           v-on:enter="enter"
           v-on:after-enter="afterEnter"
           v-for="(ball,index) in balls"
         >
-          <div v-show="ball.show" class="ball" key="index">
+          <div v-show="ball.show" class="ball">
             <div class="inner inner-hook"></div>
           </div>
-        </transition-group>
+        </transition>
       </div>
       <transition name="fold">
         <div class="shopcart-list" v-show="listShow">
@@ -60,7 +47,11 @@
                 <span class="name">{{ food.name }}</span>
                 <div class="price">￥{{ food.price*food.count }}</div>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol
+                    :food="food"
+                    @addCart="drop($event)"
+                  >
+                  </cartcontrol>
                 </div>
               </li>
             </ul>
@@ -197,6 +188,7 @@
         }
       },
       beforeEnter(el) {
+        console.log(el);
         let count = this.balls.length;
         while (count--) {
           let ball = this.balls[count];
@@ -215,16 +207,17 @@
       },
       enter(el, done) {
         /* eslint-disable no-unused-vars */
-                let rf = el.offsetHeight;
         this.$nextTick(() => {
+          let rf = el.offsetHeight;
           el.style.webkitTransform = 'translate3d(0, 0, 0)';
           el.style.transform = 'translate3d(0,0,0)';
           let inner = el.getElementsByClassName('inner-hook')[0];
           inner.style.webkitTransform = 'translate3d(0, 0, 0)';
           inner.style.transform = 'translate3d(0, 0, 0)';
           done();
+//          dddd
+//          aaaa
         });
-        window.console.log('bbb');
       },
       afterEnter(el) {
         let ball = this.dropBalls.shift();
@@ -352,7 +345,6 @@
         left: 32px;
         bottom: 22px;
         z-index: 200;
-        display: block;
         &.drop-enter-active {
           transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41);
           .inner {
@@ -362,10 +354,6 @@
             background: rgb(0, 160, 220);
             transition: all 0.4s linear;
           }
-        }
-        &.drop-enter {
-          width: 16px;
-          height: 16px;
         }
       }
     }

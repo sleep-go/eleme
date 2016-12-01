@@ -34,7 +34,7 @@
                 <div class="cartcontrol-wrapper">
                   <cartcontrol
                     :food="food"
-                    @addCart="addCart($event)"
+                    @addCart="drop($event)"
                   >
                   </cartcontrol>
                 </div>
@@ -140,7 +140,7 @@
           this.listHeight.push(height);
         }
       },
-      addCart(target) {
+      drop(target) {
         this.$nextTick(() => {
           this.$refs.shopcart.drop(target);
         });
