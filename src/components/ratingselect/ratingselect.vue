@@ -60,20 +60,26 @@
         });
       }
     },
+    data() {
+      return {
+        selectTyped: this.selectType,
+        onlyContented: this.onlyContent
+      };
+    },
     methods: {
       select(type, event) {
         if (!event._constructed) {
           return;
         }
-        this.selectType = type;
-        this.$emit('ratingType', type);
+        this.selectTyped = type;
+        this.$emit('ratingType', this.selectTyped);
       },
       toggleContent(event) {
         if (!event._constructed) {
           return;
         }
-        this.onlyContent = !this.onlyContent;
-        this.$emit('contentToggle', this.onlyContent);
+        this.onlyContented = !this.onlyContented;
+        this.$emit('contentToggle', this.onlyContented);
       }
     }
   };
