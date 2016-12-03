@@ -74,6 +74,7 @@
           return;
         }
         Vue.set(this.food, 'count', 1);
+        this.$parent.$refs.shopcart.drop(event.target);
         this.$emit('addCart', event.target);
       },
       drop(event) {
