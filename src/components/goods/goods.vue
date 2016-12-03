@@ -16,7 +16,7 @@
         <li v-for="good in goods" class="food-list food-list-hook">
           <h1 class="title">{{ good.name }}</h1>
           <ul>
-            <li v-for="food in good.foods" class="food-item border-1px">
+            <li @click="selectFood(food,$event)" v-for="food in good.foods" class="food-item border-1px">
               <div class="icon">
                 <img width="57" height="57" :src="food.icon" alt="">
               </div>
@@ -28,13 +28,13 @@
                   <span>好评率{{ food.rating }}%</span>
                 </div>
                 <div class="price">
-                  <span class="now">¥{{ food.price }}</span>
-                  <span class="old" v-show="food.oldPrice">{{ food.oldPrice }}</span>
+                  <span class="now">¥{{ food.price }}</span><span class="old"
+                                                                  v-show="food.oldPrice">{{ food.oldPrice }}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
                   <cartcontrol
                     :food="food"
-                    @addCart="drop($event)"
+                    @addCart="drop"
                   >
                   </cartcontrol>
                 </div>
@@ -50,6 +50,7 @@
       :min-price="seller.minPrice"
       :select-foods="selectFoods"
     ></shopcart>
+    <food :food="selectedFood" ref="food"></food>
   </div>
 </template>
 
@@ -57,6 +58,7 @@
   import BScroll from 'better-scroll';
   import shopcart from 'components/shopcart/shopcart';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
+  import food from 'components/food/food';
 
   const ERR_OK = 1;
   export default{
@@ -105,10 +107,18 @@
       return {
         goods: [],
         listHeight: [],
-        scrollY: 0
+        scrollY: 0,
+        selectedFood: {}
       };
     },
     methods: {
+      selectFood(food, event) {
+        if (!event._constructed) {
+          return false;
+        }
+        this.selectedFood = food;
+        this.$refs.food.show();
+      },
       selectMenu(index, event) {
         if (!event._constructed) {
           return false;
@@ -148,7 +158,8 @@
     },
     components: {
       shopcart,
-      cartcontrol
+      cartcontrol,
+      food
     }
   };
 </script>
@@ -269,7 +280,7 @@
             font-weight: 700;
             line-height: 24px;
             .now {
-              margin-right: 18px;
+              margin-right: 12px;
               font-size: 14px;
               color: rgb(240, 20, 20);
             }
