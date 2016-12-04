@@ -13,7 +13,6 @@
       </div>
     </div>
     <router-view :seller="seller"></router-view>
-    <div class="footer">footer</div>
   </div>
 </template>
 
