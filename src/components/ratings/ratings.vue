@@ -81,7 +81,7 @@
       };
     },
     created() {
-      this.$http.get('/api/ratings').then((res) => {
+      this.$http.get('http://192.168.3.153:8080/api/ratings').then((res) => {
         res = res.body;
         if (res.code === 1) {
           this.ratings = res.data;

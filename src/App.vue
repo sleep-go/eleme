@@ -26,7 +26,7 @@
       };
     },
     created() {
-      this.$http.get('/api/seller').then((res) => {
+      this.$http.get('http://192.168.3.153:8080/api/seller').then((res) => {
         res = res.body;
         if (res.code === CODE_OK) {
           this.seller = res.data;

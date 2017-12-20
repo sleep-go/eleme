@@ -69,7 +69,7 @@
     },
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-      this.$http.get('/api/goods').then((res) => {
+      this.$http.get('http://192.168.3.153:8080/api/goods').then((res) => {
         res = res.body;
         if (res.code === ERR_OK) {
           this.goods = res.data;
